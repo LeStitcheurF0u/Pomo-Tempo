@@ -101,9 +101,32 @@ startBtn.addEventListener("click", () => {
                     minCount--
                     count = 60
                 } else {
+                    playSound()
+                    showNotification()
                     clearInterval(set)
                 }
             }
         }, 1000)
     }
 })
+
+
+function playSound() {
+    const audio = new Audio('notification.mp3')
+    audio.play()
+}
+
+function showNotification() {
+    const options = {
+        body: "Pomodoro términé",
+        icon : "icon.png"
+    }
+
+    if('Notification' in window){
+        Notification.requestPermission().then(permission => {
+            if(permission === "granted") {
+                new Notification('Pomo-Temp', options)
+            }
+        })
+    }
+}
